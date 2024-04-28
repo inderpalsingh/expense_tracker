@@ -189,10 +189,10 @@ class _HomePgaeState extends State<HomePgae> {
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.red,
         unselectedItemColor: Colors.grey,
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications_outlined), label: 'Notifiy'),
+          BottomNavigationBarItem(icon: Icon(Icons.notifications_outlined), label: 'Notify'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
         
