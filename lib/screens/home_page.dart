@@ -1,6 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomePgae extends StatelessWidget {
+class HomePgae extends StatefulWidget {
+  @override
+  State<HomePgae> createState() => _HomePgaeState();
+}
+
+class _HomePgaeState extends State<HomePgae> {
   @override
   Widget build(BuildContext context) {
     String dropValue = 'This month';
@@ -11,7 +17,9 @@ class HomePgae extends StatelessWidget {
       'Next month',
     ];
 
+    
     return Scaffold(
+      
         body: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -68,8 +76,7 @@ class HomePgae extends StatelessWidget {
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Total expense',
-                          style: TextStyle(color: Colors.white, fontSize: 16)),
+                      Text('Total expense', style: TextStyle(color: Colors.white, fontSize: 16)),
                       CircleAvatar(
                         radius: 15,
                         backgroundColor: Color(0xFF7984d6),
@@ -130,11 +137,11 @@ class HomePgae extends StatelessWidget {
             child: Image.asset('images/bar.png'),
           ),
           Container(
-            margin: EdgeInsets.only(right: 210),
+            margin: const EdgeInsets.only(right: 210),
             child: const Text('Spending Details', style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold)),
           ),
           Container(
-            margin: EdgeInsets.only(right: 60),
+            margin: const EdgeInsets.only(right: 60),
             child: const Text('Your expenses are divided into 6 categories', style: TextStyle( fontSize: 15)),
           ),
           const SizedBox(height: 20),
@@ -143,8 +150,10 @@ class HomePgae extends StatelessWidget {
               Container(
                 height: 10,
                 width: MediaQuery.of(context).size.width * 0.30,
-                color: const Color(0xFF0545fb7),
+                color: const Color(0xff0545fb7),
+                child: Text('40', style: TextStyle( color: Colors.white)),
               ),
+              
               Container(
                 height: 10,
                 width: MediaQuery.of(context).size.width * 0.20,
@@ -173,10 +182,20 @@ class HomePgae extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 15),
-       
-          
         ],
       ),
-    ));
+    ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.red,
+        unselectedItemColor: Colors.grey,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.notifications_outlined), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Home'),
+        ],
+        
+      ),
+    );
   }
 }
