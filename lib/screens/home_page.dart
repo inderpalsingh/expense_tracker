@@ -191,9 +191,9 @@ class _HomePgaeState extends State<HomePgae> {
         unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications_outlined), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(icon: Icon(Icons.notifications_outlined), label: 'Notifiy'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
         
       ),
