@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePgae extends StatelessWidget {
@@ -22,7 +21,7 @@ class HomePgae extends StatelessWidget {
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Monety', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+                Text('Monety', style:TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
                 Icon(Icons.search_outlined, size: 30)
               ],
             ),
@@ -46,7 +45,7 @@ class HomePgae extends StatelessWidget {
                 ),
               ),
               DropdownButton(
-                value: dropValue,
+                value: dropValue, 
                 items: dropValueItems.map((String dropValueItems) {
                   return DropdownMenuItem(
                       value: dropValueItems, child: Text(dropValueItems));
@@ -61,26 +60,28 @@ class HomePgae extends StatelessWidget {
             width: 800,
             decoration: BoxDecoration(
                 color: const Color(0xFF5a68cc),
-              borderRadius: BorderRadius.circular(10)
-            ),
+                borderRadius: BorderRadius.circular(10)),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(
                 children: [
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Total expense',style: TextStyle(color: Colors.white, fontSize: 16)),
+                      Text('Total expense',
+                          style: TextStyle(color: Colors.white, fontSize: 16)),
                       CircleAvatar(
-                        radius: 15,backgroundColor: Color(0xFF7984d6),foregroundColor: Colors.white,
+                        radius: 15,
+                        backgroundColor: Color(0xFF7984d6),
+                        foregroundColor: Colors.white,
                         child: Icon(Icons.more_horiz_rounded),
                       ),
                     ],
                   ),
                   const Row(
                     children: [
-                      Text('\$3,734 ',style: TextStyle(color: Colors.white, fontSize: 20)),
-                      Text('/ \$4000 per month',style: TextStyle(color: Color(0xFF0afb7e7), fontSize: 15)),
+                      Text('\$3,734 ', style: TextStyle(color: Colors.white, fontSize: 20)),
+                      Text('/ \$4000 per month', style: TextStyle(color: Color(0xff0afb7e7), fontSize: 15)),
                     ],
                   ),
                   Row(
@@ -90,25 +91,89 @@ class HomePgae extends StatelessWidget {
                         width: 300,
                         decoration: BoxDecoration(
                             color: Colors.yellow,
-                          borderRadius: BorderRadius.circular(10)
-                        ),
+                            borderRadius: BorderRadius.circular(10)),
                       ),
                       Container(
                         height: 10,
                         width: 50,
                         decoration: BoxDecoration(
-                            color: Color(0xFF04e5bb3),
-                          borderRadius: BorderRadius.circular(10)
-                        ),
+                            color: const Color(0xFF04e5bb3),
+                            borderRadius: BorderRadius.circular(10)),
                       ),
                     ],
                   ),
-                  
                 ],
-                
               ),
             ),
           ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Expense Breakdown', style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold)),
+              DropdownButton(
+                value: dropValue,
+                items: dropValueItems.map((String dropValueItems) {
+                  return DropdownMenuItem(
+                      value: dropValueItems, child: Text(dropValueItems));
+                }).toList(),
+                onChanged: (value) {},
+              ),
+            ],
+          ),
+          const SizedBox(
+            width: double.infinity,
+              child: Text('Limit \$900 / week', style: TextStyle( fontSize: 18))
+          ),
+          const SizedBox(height: 20),
+          SizedBox(
+            child: Image.asset('images/bar.png'),
+          ),
+          Container(
+            margin: EdgeInsets.only(right: 210),
+            child: const Text('Spending Details', style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold)),
+          ),
+          Container(
+            margin: EdgeInsets.only(right: 60),
+            child: const Text('Your expenses are divided into 6 categories', style: TextStyle( fontSize: 15)),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Container(
+                height: 10,
+                width: MediaQuery.of(context).size.width * 0.30,
+                color: const Color(0xFF0545fb7),
+              ),
+              Container(
+                height: 10,
+                width: MediaQuery.of(context).size.width * 0.20,
+                color: const Color(0xFF0e27fb4),
+              ),
+              Container(
+                height: 10,
+                width: MediaQuery.of(context).size.width * 0.15,
+                color: const Color(0xFF0e8be83),
+              ),
+              Container(
+                height: 10,
+                width: MediaQuery.of(context).size.width * 0.10,
+                color: const Color(0xFF05ab9d5),
+              ),
+              Container(
+                height: 10,
+                width: MediaQuery.of(context).size.width * 0.05,
+                color: const Color(0xff0d55959),
+              ),
+              Container(
+                height: 10,
+                width: MediaQuery.of(context).size.width * 0.05,
+                color: const Color(0xFF059d589),
+              )
+            ],
+          ),
+          const SizedBox(height: 15),
+       
           
         ],
       ),
