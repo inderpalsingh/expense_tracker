@@ -77,17 +77,33 @@ class HomePgae extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Container(
-                    child: Row(
-                      children: [
-                        Text('\$3,734 ',style: TextStyle(color: Colors.white, fontSize: 20)),
-                        Text('/ \$4000 per month',style: TextStyle(color: Color(0xFF0afb7e7), fontSize: 15)),
-                      ],
-                    ),
+                  const Row(
+                    children: [
+                      Text('\$3,734 ',style: TextStyle(color: Colors.white, fontSize: 20)),
+                      Text('/ \$4000 per month',style: TextStyle(color: Color(0xFF0afb7e7), fontSize: 15)),
+                    ],
                   ),
-                  Container(
+                  Row(
+                    children: [
+                      Container(
+                        height: 10,
+                        width: 300,
+                        decoration: BoxDecoration(
+                            color: Colors.yellow,
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                      ),
+                      Container(
+                        height: 10,
+                        width: 50,
+                        decoration: BoxDecoration(
+                            color: Color(0xFF04e5bb3),
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                      ),
+                    ],
+                  ),
                   
-                  )
                 ],
                 
               ),
