@@ -186,6 +186,7 @@ class _HomePgaeState extends State<HomePgae> {
       ),
     ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.red,
         unselectedItemColor: Colors.grey,
         items: [
