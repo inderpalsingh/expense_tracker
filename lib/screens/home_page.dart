@@ -56,7 +56,7 @@ class _HomePgaeState extends State<HomePgae> {
                 value: dropValue, 
                 items: dropValueItems.map((String dropValueItems) {
                   return DropdownMenuItem(
-                      value: dropValueItems, child: Text(dropValueItems));
+                      value: dropValueItems, child: Text(dropValueItems,style: TextStyle(fontSize: 15)));
                 }).toList(),
                 onChanged: (value) {},
               ),
@@ -122,7 +122,8 @@ class _HomePgaeState extends State<HomePgae> {
                 value: dropValue,
                 items: dropValueItems.map((String dropValueItems) {
                   return DropdownMenuItem(
-                      value: dropValueItems, child: Text(dropValueItems));
+                    
+                      value: dropValueItems, child: Text(dropValueItems,style: TextStyle(fontSize: 15),));
                 }).toList(),
                 onChanged: (value) {},
               ),
@@ -147,37 +148,74 @@ class _HomePgaeState extends State<HomePgae> {
           const SizedBox(height: 20),
           Row(
             children: [
-              Container(
-                height: 10,
-                width: MediaQuery.of(context).size.width * 0.30,
-                color: const Color(0xff0545fb7),
-                child: Text('40', style: TextStyle( color: Colors.white)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 10,
+                    width: MediaQuery.of(context).size.width * 0.30,
+                    color: const Color(0xff0545fb7),
+                    
+                  ),
+                  Text('40%', style: TextStyle( color: Colors.black)),
+                ],
+                
               ),
               
-              Container(
-                height: 10,
-                width: MediaQuery.of(context).size.width * 0.20,
-                color: const Color(0xFF0e27fb4),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 10,
+                    width: MediaQuery.of(context).size.width * 0.20,
+                    color: const Color(0xFF0e27fb4),
+                  ),
+                  Text('25%', style: TextStyle( color: Colors.black)),
+                ],
               ),
-              Container(
-                height: 10,
-                width: MediaQuery.of(context).size.width * 0.15,
-                color: const Color(0xFF0e8be83),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 10,
+                    width: MediaQuery.of(context).size.width * 0.15,
+                    color: const Color(0xFF0e8be83),
+                  ),
+                  Text('15%', style: TextStyle( color: Colors.black)),
+                ],
               ),
-              Container(
-                height: 10,
-                width: MediaQuery.of(context).size.width * 0.10,
-                color: const Color(0xFF05ab9d5),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 10,
+                    width: MediaQuery.of(context).size.width * 0.10,
+                    color: const Color(0xFF05ab9d5),
+                  ),
+                  Text('10%', style: TextStyle( color: Colors.black)),
+                ],
               ),
-              Container(
-                height: 10,
-                width: MediaQuery.of(context).size.width * 0.05,
-                color: const Color(0xff0d55959),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 10,
+                    width: MediaQuery.of(context).size.width * 0.05,
+                    color: const Color(0xff0d55959),
+                  ),
+                  Text('5%', style: TextStyle( color: Colors.black)),
+                ],
               ),
-              Container(
-                height: 10,
-                width: MediaQuery.of(context).size.width * 0.05,
-                color: const Color(0xFF059d589),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 10,
+                    width: MediaQuery.of(context).size.width * 0.05,
+                    color: const Color(0xFF059d589),
+                  ),
+                  Text('5%', style: TextStyle( color: Colors.black)),
+                ],
               )
             ],
           ),
