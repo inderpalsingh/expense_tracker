@@ -56,7 +56,7 @@ class _HomePgaeState extends State<HomePgae> {
                 value: dropValue, 
                 items: dropValueItems.map((String dropValueItems) {
                   return DropdownMenuItem(
-                      value: dropValueItems, child: Text(dropValueItems,style: TextStyle(fontSize: 15)));
+                      value: dropValueItems, child: Text(dropValueItems,style: const TextStyle(fontSize: 15)));
                 }).toList(),
                 onChanged: (value) {},
               ),
@@ -123,7 +123,7 @@ class _HomePgaeState extends State<HomePgae> {
                 items: dropValueItems.map((String dropValueItems) {
                   return DropdownMenuItem(
                     
-                      value: dropValueItems, child: Text(dropValueItems,style: TextStyle(fontSize: 15),));
+                      value: dropValueItems, child: Text(dropValueItems,style: const TextStyle(fontSize: 15),));
                 }).toList(),
                 onChanged: (value) {},
               ),
@@ -157,7 +157,7 @@ class _HomePgaeState extends State<HomePgae> {
                     color: const Color(0xff0545fb7),
                     
                   ),
-                  Text('40%', style: TextStyle( color: Colors.black)),
+                  const Text('40%', style: TextStyle( color: Colors.black)),
                 ],
                 
               ),
@@ -170,7 +170,7 @@ class _HomePgaeState extends State<HomePgae> {
                     width: MediaQuery.of(context).size.width * 0.20,
                     color: const Color(0xFF0e27fb4),
                   ),
-                  Text('25%', style: TextStyle( color: Colors.black)),
+                  const Text('25%', style: TextStyle( color: Colors.black)),
                 ],
               ),
               Column(
@@ -181,7 +181,7 @@ class _HomePgaeState extends State<HomePgae> {
                     width: MediaQuery.of(context).size.width * 0.15,
                     color: const Color(0xFF0e8be83),
                   ),
-                  Text('15%', style: TextStyle( color: Colors.black)),
+                  const Text('15%', style: TextStyle( color: Colors.black)),
                 ],
               ),
               Column(
@@ -192,7 +192,7 @@ class _HomePgaeState extends State<HomePgae> {
                     width: MediaQuery.of(context).size.width * 0.10,
                     color: const Color(0xFF05ab9d5),
                   ),
-                  Text('10%', style: TextStyle( color: Colors.black)),
+                  const Text('10%', style: TextStyle( color: Colors.black)),
                 ],
               ),
               Column(
@@ -203,7 +203,7 @@ class _HomePgaeState extends State<HomePgae> {
                     width: MediaQuery.of(context).size.width * 0.05,
                     color: const Color(0xff0d55959),
                   ),
-                  Text('5%', style: TextStyle( color: Colors.black)),
+                  const Text('5%', style: TextStyle( color: Colors.black)),
                 ],
               ),
               Column(
@@ -214,7 +214,7 @@ class _HomePgaeState extends State<HomePgae> {
                     width: MediaQuery.of(context).size.width * 0.05,
                     color: const Color(0xFF059d589),
                   ),
-                  Text('5%', style: TextStyle( color: Colors.black)),
+                  const Text('5%', style: TextStyle( color: Colors.black)),
                 ],
               )
             ],
