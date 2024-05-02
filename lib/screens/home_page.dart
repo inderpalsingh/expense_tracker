@@ -135,7 +135,7 @@ class _HomePgaeState extends State<HomePgae> {
           ),
           const SizedBox(height: 20),
           SizedBox(
-            child: Image.asset('images/bar.png'),
+            child: Image.asset('assets/images/bar.png'),
           ),
           Container(
             margin: const EdgeInsets.only(right: 210),
