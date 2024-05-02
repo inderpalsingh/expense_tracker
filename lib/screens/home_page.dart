@@ -212,7 +212,7 @@ class _HomePgaeState extends State<HomePgae> {
                   Container(
                     height: 10,
                     width: MediaQuery.of(context).size.width * 0.05,
-                    color: const Color(0xFF059d589),
+                    color: const Color(0xff059d589),
                   ),
                   const Text('5%', style: TextStyle( color: Colors.black)),
                 ],
