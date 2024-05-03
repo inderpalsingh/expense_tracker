@@ -1,6 +1,6 @@
 
 
-import '../../domain/repositories/local/db_connection.dart';
+import '../../domain/repositories/local/db_repository.dart';
 
 class ExpenseModel{
 
