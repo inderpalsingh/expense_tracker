@@ -1,5 +1,5 @@
 
-import 'package:expense_tracker/data/local_db/db_connection.dart';
+import '../../domain/repositories/local_db/db_connection.dart';
 
 class UserModel{
   int uid;
