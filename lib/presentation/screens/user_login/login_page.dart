@@ -15,9 +15,8 @@ class LoginUser extends StatelessWidget {
     
     
     return Scaffold(
-      appBar: AppBar(title: const Text('Login here'),),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -32,6 +31,7 @@ class LoginUser extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  keyboardType: TextInputType.emailAddress,
                   controller: emailController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.email_outlined),

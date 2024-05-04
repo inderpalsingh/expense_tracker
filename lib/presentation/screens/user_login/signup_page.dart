@@ -12,9 +12,8 @@ class SignUpPage extends StatelessWidget {
     
     
     return Scaffold(
-      appBar: AppBar(title: const Text('SignUp here'),),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -36,6 +35,7 @@ class SignUpPage extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               TextFormField(
+                keyboardType: TextInputType.emailAddress,
                 controller: emailController,
                 decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.email_outlined),
