@@ -27,7 +27,6 @@ class UserModel{
   
   Map<String, dynamic> toMap(){
     return{
-      DbConnection.TABLE_USER_ID: uid,
       DbConnection.TABLE_USER_NAME: name,
       DbConnection.TABLE_USER_EMAIL: email,
       DbConnection.TABLE_USER_PASS: pass

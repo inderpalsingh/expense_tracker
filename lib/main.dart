@@ -1,4 +1,4 @@
-import 'package:expense_tracker/presentation/screens/splash/spalsh_page.dart';
+import 'package:expense_tracker/presentation/screens/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Expense Tracker',
       home: SplashPage(),
     );

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:expense_tracker/presentation/screens/home_page/home_page.dart';
+import 'package:expense_tracker/presentation/screens/user_login/login_page.dart';
 import 'package:flutter/material.dart';
 
 class SplashPage extends StatefulWidget {
@@ -17,7 +17,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePgae()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUser()));
      });
   }
 
