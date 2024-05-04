@@ -1,3 +1,6 @@
+
+import 'package:expense_tracker/data/model/user_model.dart';
+import 'package:expense_tracker/domain/repositories/local/db_repository.dart';
 import 'package:expense_tracker/presentation/screens/user_login/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -17,12 +20,13 @@ class SignUpPage extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.white, Colors.green],
+            colors: [Colors.green,Colors.white ],
           ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
@@ -45,6 +49,7 @@ class SignUpPage extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               TextFormField(
+                keyboardType: TextInputType.text,
                 controller: passController,
                 obscureText: true,
                 decoration: const InputDecoration(
@@ -54,7 +59,20 @@ class SignUpPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              ElevatedButton(onPressed: () {
+              ElevatedButton(onPressed: () async {
+                var db = DbConnection.dbInstance;
+                var check = await db.signUpUser(
+                    userModel: UserModel(
+                        uid: 0,
+                        name: nameController.text,
+                        email: emailController.text,
+                        pass: passController.text,
+                    ));
+                if(check){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const LoginUser()));
+                }else{
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Email already exists')));
+                }
         
               }, child: const Text('SignUp')),
               const SizedBox(height: 30),

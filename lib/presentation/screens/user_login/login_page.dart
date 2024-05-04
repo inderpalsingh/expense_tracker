@@ -1,4 +1,6 @@
 
+import 'package:expense_tracker/domain/repositories/local/db_repository.dart';
+import 'package:expense_tracker/presentation/screens/home_page/home_page.dart';
 import 'package:expense_tracker/presentation/screens/user_login/signup_page.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +30,7 @@ class LoginUser extends StatelessWidget {
           child: Form(
             key: _key,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
@@ -66,10 +69,16 @@ class LoginUser extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 30),
-                ElevatedButton(onPressed: () {
-                  
+                ElevatedButton(onPressed: () async{
+                  var db = DbConnection.dbInstance;
+                  var check = await db.loginUser(emailController.text.toString(), passController.text.toString());
+                  if(check){
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePgae()));
+                  }else{
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Invalid credentials !!')));
+                  }
                 }, child: const Text('Login')),
-                const SizedBox(height: 30),
+                const SizedBox(height: 30), 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

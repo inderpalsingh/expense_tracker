@@ -1,6 +1,4 @@
 
-import 'dart:html';
-
 import 'package:expense_tracker/data/model/user_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -10,7 +8,7 @@ import 'package:sqflite/sqflite.dart';
 class DbConnection {
   DbConnection._();
 
-  static final DbConnection db = DbConnection._();
+  static final DbConnection dbInstance = DbConnection._();
 
   Database? myDb;
 
@@ -22,7 +20,7 @@ class DbConnection {
   static const String TABLE_USER_PASS = 'user_pass';
 
   /// expense
-  static const String TABLE_EXPENSE_ID = 'uid';
+  static const String TABLE_EXPENSE_ID = 'eid';
   static const String TABLE_EXPENSE = 'expense';
   static const String TABLE_EXPENSE_TITLE = 'expense_title';
   static const String TABLE_EXPENSE_DESC = 'expense_desc';
@@ -50,19 +48,6 @@ class DbConnection {
           'CREATE TABLE $TABLE_USER ($TABLE_USER_ID INTEGER PRIMARY KEY AUTOINCREMENT, $TABLE_USER_NAME TEXT, $TABLE_USER_EMAIL TEXT unique , $TABLE_USER_PASS TEXT)');
     });
   }
-
-  //// User Login
-  // Future<List<UserModel>> authenticateUser({required String email, required String pass}) async {
-  //   var db = await getDB();
-  //   var mData = await db.query(TABLE_USER, where: "$TABLE_USER_EMAIL = ? $TABLE_USER_PASS = ?", whereArgs: [email, pass]);
-  //
-  //   if (mData.isNotEmpty) {
-  //     var prefs = await SharedPreferences.getInstance();
-  //    
-  //   }
-  //
-  //   // return mData.isNotEmpty;
-  // }
   
   
   Future<bool> signUpUser({required UserModel userModel})async{
