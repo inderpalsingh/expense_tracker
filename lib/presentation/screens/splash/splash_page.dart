@@ -17,7 +17,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUser()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginUser()));
      });
   }
 
@@ -26,12 +26,21 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueAccent,
-      body: Center(
-        child: AnimatedTextKit(
-        animatedTexts: [
-          TypewriterAnimatedText('Welcome to Expense app', textStyle: const TextStyle(fontSize: 30, ) )
-        ],
-             ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.redAccent, Colors.white],
+          ),
+        ),
+        child: Center(
+          child: AnimatedTextKit(
+          animatedTexts: [
+            TypewriterAnimatedText('Welcome to Expense app', textStyle: const TextStyle(fontSize: 30, ) )
+          ],
+               ),
+        ),
       )
     );
   }
