@@ -1,11 +1,16 @@
-import 'package:flutter/material.dart';
 
-class HomePgae extends StatefulWidget {
+import 'package:expense_tracker/presentation/screens/user_login/login_page.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
-  State<HomePgae> createState() => _HomePgaeState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePgaeState extends State<HomePgae> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     String dropValue = 'This month';
@@ -18,21 +23,29 @@ class _HomePgaeState extends State<HomePgae> {
 
     
     return Scaffold(
-      
-        body: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
         children: [
           Container(
             padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.07),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Monety', style:TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
-                Icon(Icons.search_outlined, size: 30)
+                IconButton(onPressed: () async{
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  var logOut = await prefs.setInt('UID', 0);
+                  if(logOut){
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUser()));
+                  }
+                  
+                }, icon: const Icon(Icons.logout_outlined,size: 30,))
+
               ],
             ),
           ),
+          
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -121,21 +134,15 @@ class _HomePgaeState extends State<HomePgae> {
                 value: dropValue,
                 items: dropValueItems.map((String dropValueItems) {
                   return DropdownMenuItem(
-                    
-                      value: dropValueItems, child: Text(dropValueItems,style: const TextStyle(fontSize: 15),));
+                      value: dropValueItems, child: Text(dropValueItems,style: const TextStyle(fontSize: 15)));
                 }).toList(),
                 onChanged: (value) {},
               ),
             ],
           ),
-          const SizedBox(
-            width: double.infinity,
-              child: Text('Limit \$900 / week', style: TextStyle( fontSize: 18))
-          ),
+          const SizedBox(width: double.infinity, child: Text('Limit \$900 / week', style: TextStyle( fontSize: 18))),
           const SizedBox(height: 20),
-          SizedBox(
-            child: Image.asset('assets/images/bar.png'),
-          ),
+          SizedBox(child: Image.asset('assets/images/bar.png')),
           Container(
             margin: const EdgeInsets.only(right: 210),
             child: const Text('Spending Details', style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold)),
