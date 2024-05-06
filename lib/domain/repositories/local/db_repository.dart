@@ -10,7 +10,7 @@ class DbConnection {
 
   static final DbConnection dbInstance = DbConnection._();
 
-  static String loginCheckLogin = "UID";
+  static String loginCheckLoginID = "UID";
 
   Database? myDb;
 
@@ -88,12 +88,12 @@ class DbConnection {
   Future<int> getUID()async {
     var prefs = await SharedPreferences.getInstance();
     // return prefs.getInt('UID')!;
-    return prefs.getInt(loginCheckLogin)!;
+    return prefs.getInt(loginCheckLoginID)!;
   }
 
   //// set USER UID
   void setUID(int uid) async {
     var prefs = await SharedPreferences.getInstance();
-    prefs.setInt(loginCheckLogin,uid);
+    prefs.setInt(loginCheckLoginID,uid);
   }
 }
