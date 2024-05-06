@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
                 Text('Monety', style:TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
                 IconButton(onPressed: () async{
                   SharedPreferences prefs = await SharedPreferences.getInstance();
-                  var logOut = await prefs.setInt('UID', 0);
+                  var logOut = await prefs.remove('UID');
                   if(logOut){
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUser()));
                   }
