@@ -1,4 +1,5 @@
 
+import 'package:expense_tracker/domain/repositories/local/db_repository.dart';
 import 'package:expense_tracker/presentation/screens/user_login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +12,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+
+
   @override
   Widget build(BuildContext context) {
     String dropValue = 'This month';
@@ -32,12 +36,12 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Monety', style:TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+                const Text('Monety', style:TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
                 IconButton(onPressed: () async{
                   SharedPreferences prefs = await SharedPreferences.getInstance();
-                  var logOut = await prefs.remove('UID');
+                  var logOut = await prefs.remove(DbConnection.loginCheckLogin);
                   if(logOut){
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUser()));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginUser()));
                   }
                   
                 }, icon: const Icon(Icons.logout_outlined,size: 30,))
