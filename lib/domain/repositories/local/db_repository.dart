@@ -1,4 +1,5 @@
 
+import 'package:expense_tracker/data/model/expense_model.dart';
 import 'package:expense_tracker/data/model/user_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -87,7 +88,6 @@ class DbConnection {
   /// get USER UID
   Future<int> getUID()async {
     var prefs = await SharedPreferences.getInstance();
-    // return prefs.getInt('UID')!;
     return prefs.getInt(loginCheckLoginID)!;
   }
 
@@ -96,4 +96,33 @@ class DbConnection {
     var prefs = await SharedPreferences.getInstance();
     prefs.setInt(loginCheckLoginID,uid);
   }
+  
+  
+  /// For Expense 
+  Future<List<ExpenseModel>> fetchExpense() async{
+    var db = await getDB();
+    var userUid = await getUID();
+    
+    var getUser = await db.query(TABLE_USER, where: '$TABLE_EXPENSE = ?', whereArgs: ['$userUid']);
+    
+    List<ExpenseModel> getDbUsers = [];
+    
+    for(Map<String, dynamic> mapData in getUser){
+      var dataModel = ExpenseModel.fromMap(mapData);
+      getDbUsers.add(dataModel);
+    }
+    return getDbUsers;
+    
+  }
+  
+  
+
+  Future<bool> addExpense({required ExpenseModel expenseModel})async{
+    var db = await getDB();
+    var userUid = await getUID();
+    expenseModel.uid = userUid;
+    var check = await db.insert(TABLE_EXPENSE, expenseModel.toMap());
+    return check>0;
+  }
+  
 }

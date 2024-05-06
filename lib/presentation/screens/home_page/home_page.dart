@@ -1,5 +1,6 @@
 
 import 'package:expense_tracker/domain/repositories/local/db_repository.dart';
+import 'package:expense_tracker/presentation/screens/add_page/add_expense.dart';
 import 'package:expense_tracker/presentation/screens/user_login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -243,6 +244,13 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.notifications_outlined), label: 'Notify'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () { 
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddExpense(),));
+        },
+        child: Icon(Icons.add),
         
       ),
     );

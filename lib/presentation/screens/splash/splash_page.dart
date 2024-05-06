@@ -6,6 +6,8 @@ import 'package:expense_tracker/presentation/screens/user_login/login_page.dart'
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../domain/repositories/local/db_repository.dart';
+
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -25,14 +27,14 @@ class _SplashPageState extends State<SplashPage> {
   
   void checkUserExists()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    int? checkUser = prefs.getInt('UID');
+    int? checkUser = prefs.getInt(DbConnection.loginCheckLoginID);
     
     if(checkUser != null){
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
     } else {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginUser()));
     }
-  //   Timer(const Duration(seconds: 3), () {
+    //   Timer(const Duration(seconds: 3), () {
     //       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginUser()));
     //     });
     
