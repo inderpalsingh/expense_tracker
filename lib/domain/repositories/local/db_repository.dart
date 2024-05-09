@@ -104,7 +104,7 @@ class DbConnection {
     var db = await getDB();
     var userUid = await getUID();
     
-    var getUser = await db.query(TABLE_USER, where: '$TABLE_EXPENSE = ?', whereArgs: ['$userUid']);
+    var getUser = await db.query(TABLE_EXPENSE, where: '$TABLE_USER_ID = ?', whereArgs: ['$userUid']);
     
     List<ExpenseModel> getDbUsers = [];
     

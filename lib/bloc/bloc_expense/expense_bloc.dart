@@ -10,7 +10,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState>{
   
   ExpenseBloc({required this.db}): super(InitializationState()){
     
-    on<InitializationEvent>((event, emit)async{
+    on<FetchExpenseEvent>((event, emit)async{
       emit(LoadingState());
       List<ExpenseModel> mData = await db.fetchExpense();
       emit(SuccessfulState(allExpenseState: mData));

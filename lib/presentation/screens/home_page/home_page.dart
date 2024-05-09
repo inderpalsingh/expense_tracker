@@ -1,8 +1,11 @@
 
+import 'package:expense_tracker/bloc/bloc_expense/expense_bloc.dart';
+import 'package:expense_tracker/bloc/bloc_expense/expense_event.dart';
 import 'package:expense_tracker/domain/repositories/local/db_repository.dart';
 import 'package:expense_tracker/presentation/screens/add_page/add_expense.dart';
 import 'package:expense_tracker/presentation/screens/user_login/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,6 +18,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<ExpenseBloc>().add(FetchExpenseEvent());
+  }
 
   @override
   Widget build(BuildContext context) {

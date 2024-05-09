@@ -3,7 +3,7 @@ import 'package:expense_tracker/data/model/expense_model.dart';
 sealed class ExpenseEvent{}
 
 
-class InitializationEvent extends ExpenseEvent{}
+class FetchExpenseEvent extends ExpenseEvent{}
 
 class AddExpenseEvent extends ExpenseEvent{
   ExpenseModel addExpenseModel;

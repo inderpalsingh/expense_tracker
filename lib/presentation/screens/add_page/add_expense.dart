@@ -96,12 +96,17 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   return DropdownMenuItem(
                     value: type,
                       child: Text(type,
-                        style: const TextStyle(color: Colors.amber),
+                        style: const TextStyle(color: Colors.red),
                       )
                   );
                 }).toList()
               ),
             ),
+            ElevatedButton(
+                onPressed: (){
+                  selectedDate(context);
+                },
+                child: Text(DateFormat.yMMMMd().format(expenseDate))),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.redAccent,
@@ -120,8 +125,9 @@ class _AddExpensePageState extends State<AddExpensePage> {
                         balance: widget.balance.toString()
                         
                       )));
+                  Navigator.pop(context);
                 }, 
-                child: const Text('Save')
+                child: const Text('Save'),
             )
           ],
         ),
