@@ -30,6 +30,7 @@ class DbConnection {
   static const String TABLE_EXPENSE_TIMESTAMP = 'expense_time';
   static const String TABLE_EXPENSE_AMOUNT = 'expense_amount';
   static const String TABLE_EXPENSE_BALANCE = 'expense_balance';
+  static const String TABLE_EXPENSE_TYPE = 'expense_type';
 
   Future<Database> getDB() async {
     if (myDb != null) {
@@ -46,7 +47,7 @@ class DbConnection {
     return await openDatabase(setFilePath, version: 1,
         onCreate: (db, version) async {
       await db.execute(
-          'CREATE TABLE $TABLE_EXPENSE ($TABLE_EXPENSE_ID INTEGER PRIMARY KEY AUTOINCREMENT, $TABLE_USER_ID integer, $TABLE_EXPENSE_TITLE TEXT, $TABLE_EXPENSE_DESC TEXT , $TABLE_EXPENSE_TIMESTAMP TEXT , $TABLE_EXPENSE_AMOUNT TEXT , $TABLE_EXPENSE_BALANCE TEXT)');
+          'CREATE TABLE $TABLE_EXPENSE ($TABLE_EXPENSE_ID INTEGER PRIMARY KEY AUTOINCREMENT, $TABLE_USER_ID integer, $TABLE_EXPENSE_TITLE TEXT, $TABLE_EXPENSE_DESC TEXT , $TABLE_EXPENSE_TIMESTAMP TEXT , $TABLE_EXPENSE_AMOUNT TEXT , $TABLE_EXPENSE_BALANCE TEXT, $TABLE_EXPENSE_TYPE text)');
       await db.execute(
           'CREATE TABLE $TABLE_USER ($TABLE_USER_ID INTEGER PRIMARY KEY AUTOINCREMENT, $TABLE_USER_NAME TEXT, $TABLE_USER_EMAIL TEXT unique , $TABLE_USER_PASS TEXT)');
     });
@@ -119,8 +120,8 @@ class DbConnection {
 
   Future<bool> addExpense({required ExpenseModel expenseModel})async{
     var db = await getDB();
-    var userUid = await getUID();
-    expenseModel.uid = userUid;
+    var uid = await getUID();
+    expenseModel.uid = uid;
     var check = await db.insert(TABLE_EXPENSE, expenseModel.toMap());
     return check>0;
   }

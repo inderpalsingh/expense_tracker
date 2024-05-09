@@ -73,7 +73,7 @@ class LoginUser extends StatelessWidget {
                   var db = DbConnection.dbInstance;
                   var check = await db.loginUser(emailController.text.toString(), passController.text.toString());
                   if(check){
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage()));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const HomePage()));
                   }else{
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Invalid credentials !!')));
                   }

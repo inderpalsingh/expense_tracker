@@ -17,7 +17,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState>{
       
     });
     
-    on<AddEvent>((event, emit)async {
+    on<AddExpenseEvent>((event, emit)async {
       emit(LoadingState());
       bool check = await db.addExpense(expenseModel: event.addExpenseModel);
       

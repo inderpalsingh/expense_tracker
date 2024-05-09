@@ -247,10 +247,12 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.redAccent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         onPressed: () { 
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AddExpense(),));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddExpensePage(balance: 0)));
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add,color: Colors.white,),
         
       ),
     );

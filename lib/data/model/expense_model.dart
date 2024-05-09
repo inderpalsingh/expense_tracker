@@ -8,6 +8,7 @@ class ExpenseModel {
   String exTime;
   String amount;
   String balance;
+  String type;
 
   ExpenseModel(
       {required this.uid,
@@ -16,7 +17,9 @@ class ExpenseModel {
       required this.desc,
       required this.exTime,
       required this.amount,
-      required this.balance});
+      required this.balance,
+        required this.type
+      });
 
   /// model to map
   factory ExpenseModel.fromMap(Map<String, dynamic> map) {
@@ -27,7 +30,9 @@ class ExpenseModel {
         desc: map[DbConnection.TABLE_EXPENSE_DESC],
         exTime: map[DbConnection.TABLE_EXPENSE_TIMESTAMP],
         amount: map[DbConnection.TABLE_EXPENSE_AMOUNT],
-        balance: map[DbConnection.TABLE_EXPENSE_BALANCE]);
+        balance: map[DbConnection.TABLE_EXPENSE_BALANCE],
+      type: map[DbConnection.TABLE_EXPENSE_TYPE]
+    );
   }
 
   /// map to model
@@ -39,7 +44,8 @@ class ExpenseModel {
       DbConnection.TABLE_EXPENSE_DESC: desc,
       DbConnection.TABLE_EXPENSE_TIMESTAMP: exTime,
       DbConnection.TABLE_EXPENSE_AMOUNT: amount,
-      DbConnection.TABLE_EXPENSE_BALANCE: balance
+      DbConnection.TABLE_EXPENSE_BALANCE: balance,
+      DbConnection.TABLE_EXPENSE_TYPE: type
     };
   }
 }
