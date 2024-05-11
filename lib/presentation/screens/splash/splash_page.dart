@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:expense_tracker/presentation/screens/home_page/home_page.dart';
 import 'package:expense_tracker/presentation/screens/user_login/login_page.dart';

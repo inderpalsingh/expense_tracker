@@ -1,4 +1,5 @@
-import '../data/model/user_model.dart';
+
+import '../../data/model/user_model.dart';
 
 sealed class UserState{}
 
@@ -12,8 +13,8 @@ class SuccessfulUserState extends UserState{
   
 }
 
-class FailerUserState extends UserState{
+class FailureUserState extends UserState{
   String errorMsg;
 
-  FailerUserState({required this.errorMsg});
+  FailureUserState({required this.errorMsg});
 }

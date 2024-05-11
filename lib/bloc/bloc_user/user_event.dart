@@ -11,6 +11,10 @@ class AddUserEvent extends UserEvent{
 
 
 }
+class LoginUserEvent extends UserEvent{
+  UserModel loginUserModel;
+  LoginUserEvent({required this.loginUserModel});
+}
 
 
 

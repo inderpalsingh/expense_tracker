@@ -1,5 +1,6 @@
-import 'package:expense_tracker/bloc_user/user_event.dart';
-import 'package:expense_tracker/bloc_user/user_state.dart';
+
+import 'package:expense_tracker/bloc/bloc_user/user_event.dart';
+import 'package:expense_tracker/bloc/bloc_user/user_state.dart';
 import 'package:expense_tracker/data/model/user_model.dart';
 import 'package:expense_tracker/domain/repositories/local/db_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +16,13 @@ class UserBloc extends Bloc<UserEvent, UserState>{
      List<UserModel> mData = [];
      emit(SuccessfulUserState(getAllUserState: mData));
     });
+    
+    
+    on<LoginUserEvent>((event, emit){
+      emit(LoadingUserState());
+      List<UserModel> mData = [];
+      emit(SuccessfulUserState(getAllUserState: mData));
+    });
 
     on<AddUserEvent>((event, emit)async{
       emit(LoadingUserState());
@@ -23,7 +31,7 @@ class UserBloc extends Bloc<UserEvent, UserState>{
         List<UserModel> mData = [];
         emit(SuccessfulUserState(getAllUserState: mData));
       }else{
-        emit(FailerUserState(errorMsg: 'Not added'));
+        emit(FailureUserState(errorMsg: 'Not added'));
       }
     });
 
