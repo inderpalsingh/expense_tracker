@@ -74,7 +74,7 @@ class DbConnection {
   
   
   /// User login
-  Future<bool> loginUser (String email, String pass) async{
+  Future<bool> loginUser ({required String email,required String pass}) async{
     var db = await getDB();
     var checkUserExists = await db.query(TABLE_USER, where: '$TABLE_USER_EMAIL = ? AND $TABLE_USER_PASS = ?', whereArgs: [email, pass] );
     
@@ -83,8 +83,16 @@ class DbConnection {
     }
     return checkUserExists.isNotEmpty;
   }
-  
-  
+
+
+  fetchUser()async{
+    var db = await getDB();
+    var userUid = await getUID();
+    print(userUid);
+    await db.query(TABLE_USER, where: '$TABLE_USER_ID = ?', whereArgs: ['$userUid']);
+    
+  }
+
 
   /// get USER UID
   Future<int> getUID()async {
@@ -116,8 +124,6 @@ class DbConnection {
     
   }
   
-  
-
   Future<bool> addExpense({required ExpenseModel expenseModel})async{
     var db = await getDB();
     var uid = await getUID();

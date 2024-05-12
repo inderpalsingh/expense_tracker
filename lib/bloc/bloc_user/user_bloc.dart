@@ -18,10 +18,15 @@ class UserBloc extends Bloc<UserEvent, UserState>{
     });
     
     
-    on<LoginUserEvent>((event, emit){
+    on<LoginUserEvent>((event, emit)async{
       emit(LoadingUserState());
-      List<UserModel> mData = [];
-      emit(SuccessfulUserState(getAllUserState: mData));
+      var checkLogin = await db.loginUser(email: event.email, pass: event.pass);
+      if(checkLogin){
+        var mData = await db.fetchUser();
+        emit(SuccessfulUserState(getAllUserState: mData));
+      }else{
+        emit(FailureUserState(errorMsg: 'Not Logging'));
+      }
     });
 
     on<AddUserEvent>((event, emit)async{

@@ -6,14 +6,14 @@ class InitializationUserEvent extends UserEvent{}
 
 class AddUserEvent extends UserEvent{
   UserModel userModel;
-
   AddUserEvent({required this.userModel});
 
 
 }
 class LoginUserEvent extends UserEvent{
-  UserModel loginUserModel;
-  LoginUserEvent({required this.loginUserModel});
+  String email;
+  String pass;
+  LoginUserEvent({required this.email, required this.pass});
 }
 
 

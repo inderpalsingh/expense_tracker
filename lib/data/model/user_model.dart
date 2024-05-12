@@ -7,7 +7,7 @@ class UserModel{
   String email;
   String pass;
   
-  UserModel({required this.uid, required this.name, required this.email, required this.pass });
+  UserModel({this.uid=0, required this.name, required this.email, required this.pass });
   
   
   //// model to map

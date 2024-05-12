@@ -4,6 +4,7 @@ import 'package:expense_tracker/bloc/bloc_expense/expense_event.dart';
 import 'package:expense_tracker/domain/repositories/local/db_repository.dart';
 import 'package:expense_tracker/presentation/screens/add_page/add_expense.dart';
 import 'package:expense_tracker/presentation/screens/user_login/login_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -121,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Container(
                         height: 10,
-                        width: 300,
+                        width: 250,
                         decoration: BoxDecoration(
                             color: Colors.yellow,
                             borderRadius: BorderRadius.circular(10)),
