@@ -24,7 +24,8 @@ class _AddExpensePageState extends State<AddExpensePage> {
   String transactionType = 'Debit';
 
   DateFormat dateFormat = DateFormat.yMMMEd();
-  DateFormat monthFormat = DateFormat.MMM();
+  // DateFormat monthFormat = DateFormat.MMM();
+  DateFormat monthFormat = DateFormat.LLLL();
   DateFormat yearFormat = DateFormat.y();
   DateTime expenseDate = DateTime.now();
 
