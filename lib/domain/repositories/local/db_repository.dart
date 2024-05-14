@@ -85,13 +85,13 @@ class DbConnection {
   }
 
 
-  fetchUser()async{
-    var db = await getDB();
-    var userUid = await getUID();
-    print(userUid);
-    await db.query(TABLE_USER, where: '$TABLE_USER_ID = ?', whereArgs: ['$userUid']);
-    
-  }
+  // fetchUser()async{
+  //   var db = await getDB();
+  //   var userUid = await getUID();
+  //   print(userUid);
+  //   await db.query(TABLE_USER, where: '$TABLE_USER_ID = ?', whereArgs: ['$userUid']);
+  //  
+  // }
 
 
   /// get USER UID

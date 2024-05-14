@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../custom_ui/app_constant.dart';
+import '../../custom_ui/custom_button.dart';
+
 class AddExpensePage extends StatefulWidget {
   num balance;
 
@@ -24,10 +27,11 @@ class _AddExpensePageState extends State<AddExpensePage> {
   String transactionType = 'Debit';
 
   DateFormat dateFormat = DateFormat.yMMMEd();
-  // DateFormat monthFormat = DateFormat.MMM();
   DateFormat monthFormat = DateFormat.LLLL();
   DateFormat yearFormat = DateFormat.y();
   DateTime expenseDate = DateTime.now();
+
+  var selectedCategoryIndex = -1;
 
   List<DateWiseExpenseModel> listDateWiseExpModel = [];
   List<MonthWiseExpenseModel> listMonthWiseExpModel = [];
@@ -74,33 +78,85 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   labelText: 'Amount', border: OutlineInputBorder()),
             ),
             const SizedBox(height: 30),
-            Container(
+            SizedBox(
               width: double.infinity,
-              child: DropdownButton(
-                  value: transactionType,
-                  onChanged: (value) {
-                    setState(() {
-                      transactionType = value!;
-                    });
-                  },
-                  items: ["Debit", "Credit"].map((type) {
-                    return DropdownMenuItem(
-                        value: type,
-                        child: Text(
-                          type,
-                          style: const TextStyle(color: Colors.red),
-                        ));
-                  }).toList()),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DropdownButton(
+                      value: transactionType,
+                      onChanged: (value) {
+                        setState(() {
+                          transactionType = value!;
+                        });
+                      },
+                      items: ["Debit", "Credit"].map((type) {
+                        return DropdownMenuItem(value: type, child: Text(type));
+                      }).toList()),
+                ],
+              ),
+            ),
+            Center(
+              child: CustomButton(
+                name: "Choose Expense",
+                mWidget: selectedCategoryIndex != -1
+                    ? Row(
+                        children: [
+                          Text(AppConstants.mCategories[selectedCategoryIndex].catTitle,
+                            style: const TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500),
+                          )
+                        ],
+                      ) : null,
+                onTap: () {
+                  showModalBottomSheet(
+                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
+                      context: context,
+                      builder: (context) {
+                        return GridView.builder(
+                            itemCount: AppConstants.mCategories.length,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+                            itemBuilder: (context, index) {
+                              var eachCategory = AppConstants.mCategories[index];
+                              return InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    selectedCategoryIndex = index;
+                                    //eachCat.catId;
+                                    //select id instead
+                                  });
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.cyan.shade100,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Image.asset(eachCategory.catImgPath),
+                                  ),
+                                ),
+                              );
+                            });
+                      });
+                },
+              ),
             ),
             ElevatedButton(
-                onPressed: () {
-                  selectedDate(context);
-                },
-                child: Text(DateFormat.yMMMMd().format(expenseDate))),
+              onPressed: () {
+                selectedDate(context);
+              },
+              child: Text(DateFormat.yMMMMd().format(expenseDate)),
+            ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.redAccent,
-                  foregroundColor: Colors.white),
+                backgroundColor: Colors.redAccent,
+                foregroundColor: Colors.white,
+              ),
               onPressed: () {
                 context.read<ExpenseBloc>().add(AddExpenseEvent(
                     addExpenseModel: ExpenseModel(
@@ -199,10 +255,9 @@ class _AddExpensePageState extends State<AddExpensePage> {
         }
       }
       listMonthWiseExpModel.add(MonthWiseExpenseModel(
-        month: eachMonth,
-        totalAmt: monthTotalExpAmt.toString(),
-        eachDateAllExpenses: eachMonthExpense
-        ));
+          month: eachMonth,
+          totalAmt: monthTotalExpAmt.toString(),
+          eachDateAllExpenses: eachMonthExpense));
     }
   }
 }
