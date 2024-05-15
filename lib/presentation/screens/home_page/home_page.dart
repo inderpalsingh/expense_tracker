@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.07),
+            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                   }
                   
                 }, icon: const Icon(Icons.logout_outlined,size: 30,))
-
+        
               ],
             ),
           ),
@@ -216,7 +216,7 @@ class _HomePageState extends State<HomePage> {
                         height: 50,
                         decoration: BoxDecoration( color: Colors.blue.shade500,borderRadius: BorderRadius.circular(5)),
                         child: Image.asset('assets/icons/mortgage.png', width: 40, height: 30),
-
+        
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 3),
@@ -238,8 +238,85 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(height: 15),
+          Container(
+            height: 200,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade100,
+              borderRadius: BorderRadius.circular(21)
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 5),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      
+                      Text('Tuesday, 14',style: TextStyle(fontSize: 15)),
+                      Text('\$1380',style: TextStyle(fontSize: 15)),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  const Divider(color: Colors.black38),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration( color: Colors.blue.shade500,borderRadius: BorderRadius.circular(5)),
+                          child: Image.asset('assets/icons/shopping_cart.png', width: 40, height: 30),
+                        
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 3),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Shop',style: TextStyle(fontSize: 15)),
+                            Text('Buy new clothes',style: TextStyle(fontSize: 15))
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Text('-\$90',style: TextStyle(fontSize: 15, color: Colors.red)),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration( color: Colors.blue.shade500,borderRadius: BorderRadius.circular(5)),
+                        child: Image.asset('assets/icons/mortgage.png', width: 40, height: 30),
+        
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 3),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Home',style: TextStyle(fontSize: 15)),
+                            Text('Buy new House',style: TextStyle(fontSize: 15))
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Text('-\$120',style: TextStyle(fontSize: 15, color: Colors.red)),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+          
         ],
-      ),
+              ),
     ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
