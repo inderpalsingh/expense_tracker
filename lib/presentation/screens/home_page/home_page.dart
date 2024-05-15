@@ -2,10 +2,12 @@
 import 'package:expense_tracker/bloc/bloc_expense/expense_bloc.dart';
 import 'package:expense_tracker/bloc/bloc_expense/expense_event.dart';
 import 'package:expense_tracker/domain/repositories/local/db_repository.dart';
+import 'package:expense_tracker/presentation/custom_ui/app_constant.dart';
 import 'package:expense_tracker/presentation/screens/add_page/add_expense.dart';
 import 'package:expense_tracker/presentation/screens/user_login/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -156,89 +158,84 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           const SizedBox(width: double.infinity, child: Text('Limit \$900 / week', style: TextStyle( fontSize: 18))),
-          const SizedBox(height: 20),
-          SizedBox(child: Image.asset('assets/images/bar.png')),
+          const SizedBox(height: 15),
+          /// bar data
+          /// 
           Container(
-            margin: const EdgeInsets.only(right: 210),
-            child: const Text('Spending Details', style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold)),
-          ),
-          Container(
-            margin: const EdgeInsets.only(right: 60),
-            child: const Text('Your expenses are divided into 6 categories', style: TextStyle( fontSize: 15)),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            height: 200,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade100,
+              borderRadius: BorderRadius.circular(21)
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
                 children: [
-                  Container(
-                    height: 10,
-                    width: MediaQuery.of(context).size.width * 0.30,
-                    color: const Color(0xff0545fb7),
-                    
+                  const SizedBox(height: 5),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      
+                      Text('Tuesday, 14',style: TextStyle(fontSize: 15)),
+                      Text('\$1380',style: TextStyle(fontSize: 15)),
+                    ],
                   ),
-                  const Text('40%', style: TextStyle( color: Colors.black)),
+                  const SizedBox(height: 10),
+                  const Divider(color: Colors.black38),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration( color: Colors.blue.shade500,borderRadius: BorderRadius.circular(5)),
+                          child: Image.asset('assets/icons/shopping_cart.png', width: 40, height: 30),
+                        
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 3),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Shop',style: TextStyle(fontSize: 15)),
+                            Text('Buy new clothes',style: TextStyle(fontSize: 15))
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Text('-\$90',style: TextStyle(fontSize: 15, color: Colors.red)),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration( color: Colors.blue.shade500,borderRadius: BorderRadius.circular(5)),
+                        child: Image.asset('assets/icons/mortgage.png', width: 40, height: 30),
+
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 3),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Home',style: TextStyle(fontSize: 15)),
+                            Text('Buy new House',style: TextStyle(fontSize: 15))
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Text('-\$120',style: TextStyle(fontSize: 15, color: Colors.red)),
+                      )
+                    ],
+                  )
                 ],
-                
               ),
-              
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 10,
-                    width: MediaQuery.of(context).size.width * 0.20,
-                    color: const Color(0xFF0e27fb4),
-                  ),
-                  const Text('25%', style: TextStyle( color: Colors.black)),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 10,
-                    width: MediaQuery.of(context).size.width * 0.15,
-                    color: const Color(0xFF0e8be83),
-                  ),
-                  const Text('15%', style: TextStyle( color: Colors.black)),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 10,
-                    width: MediaQuery.of(context).size.width * 0.10,
-                    color: const Color(0xFF05ab9d5),
-                  ),
-                  const Text('10%', style: TextStyle( color: Colors.black)),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 10,
-                    width: MediaQuery.of(context).size.width * 0.05,
-                    color: const Color(0xff0d55959),
-                  ),
-                  const Text('5%', style: TextStyle( color: Colors.black)),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 10,
-                    width: MediaQuery.of(context).size.width * 0.05,
-                    color: const Color(0xff059d589),
-                  ),
-                  const Text('5%', style: TextStyle( color: Colors.black)),
-                ],
-              )
-            ],
+            ),
           ),
           const SizedBox(height: 15),
         ],
@@ -268,3 +265,89 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
+
+// SizedBox(child: Image.asset('assets/images/bar.png')),
+// Container(
+//   margin: const EdgeInsets.only(right: 210),
+//   child: const Text('Spending Details', style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold)),
+// ),
+// Container(
+//   margin: const EdgeInsets.only(right: 60),
+//   child: const Text('Your expenses are divided into 6 categories', style: TextStyle( fontSize: 15)),
+// ),
+// const SizedBox(height: 20),
+// Row(
+//   children: [
+//     Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Container(
+//           height: 10,
+//           width: MediaQuery.of(context).size.width * 0.30,
+//           color: const Color(0xff0545fb7),
+//          
+//         ),
+//         const Text('40%', style: TextStyle( color: Colors.black)),
+//       ],
+//      
+//     ),
+//    
+//     Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Container(
+//           height: 10,
+//           width: MediaQuery.of(context).size.width * 0.20,
+//           color: const Color(0xFF0e27fb4),
+//         ),
+//         const Text('25%', style: TextStyle( color: Colors.black)),
+//       ],
+//     ),
+//     Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Container(
+//           height: 10,
+//           width: MediaQuery.of(context).size.width * 0.15,
+//           color: const Color(0xFF0e8be83),
+//         ),
+//         const Text('15%', style: TextStyle( color: Colors.black)),
+//       ],
+//     ),
+//     Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Container(
+//           height: 10,
+//           width: MediaQuery.of(context).size.width * 0.10,
+//           color: const Color(0xFF05ab9d5),
+//         ),
+//         const Text('10%', style: TextStyle( color: Colors.black)),
+//       ],
+//     ),
+//     Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Container(
+//           height: 10,
+//           width: MediaQuery.of(context).size.width * 0.05,
+//           color: const Color(0xff0d55959),
+//         ),
+//         const Text('5%', style: TextStyle( color: Colors.black)),
+//       ],
+//     ),
+//     Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Container(
+//           height: 10,
+//           width: MediaQuery.of(context).size.width * 0.05,
+//           color: const Color(0xff059d589),
+//         ),
+//         const Text('5%', style: TextStyle( color: Colors.black)),
+//       ],
+//     )
+//   ],
+// ),
