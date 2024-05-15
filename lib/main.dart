@@ -1,6 +1,7 @@
 import 'package:expense_tracker/bloc/bloc_expense/expense_bloc.dart';
 import 'package:expense_tracker/bloc/bloc_user/user_bloc.dart';
 import 'package:expense_tracker/domain/repositories/local/db_repository.dart';
+import 'package:expense_tracker/presentation/screens/home_page/home_page.dart';
 import 'package:expense_tracker/presentation/screens/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       title: 'Expense Tracker',
-      home: SplashPage(),
+      home: HomePage(),
     );
   }
 }

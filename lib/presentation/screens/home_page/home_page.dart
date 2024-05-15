@@ -1,6 +1,7 @@
 import 'package:expense_tracker/bloc/bloc_expense/expense_bloc.dart';
 import 'package:expense_tracker/bloc/bloc_expense/expense_event.dart';
 import 'package:expense_tracker/bloc/bloc_expense/expense_state.dart';
+import 'package:expense_tracker/data/model/filter_expense_model.dart';
 import 'package:expense_tracker/domain/repositories/local/db_repository.dart';
 import 'package:expense_tracker/presentation/custom_ui/app_constant.dart';
 import 'package:expense_tracker/presentation/screens/add_page/add_expense.dart';
@@ -35,6 +36,8 @@ class _HomePageState extends State<HomePage> {
       'Pre month',
       'Next month',
     ];
+
+    List<FilterExpenseModel> listFilterExpModel = [];
 
     return Scaffold(
       body: Padding(
@@ -186,117 +189,106 @@ class _HomePageState extends State<HomePage> {
 
             /// bar data
             ///
-            BlocBuilder(builder: (_, state) {
-              if (state is LoadingState) {
-                return Center(child: CircularProgressIndicator());
-              }
+            /// 
+            /// 
 
-              if (state is FailureState) {
-                return Center(
-                  child: Text('Error: ${state.errorMsg}'),
-                );
-              }
-
-              if (state is SuccessfulState) {
-                return ListView.builder(itemBuilder: (_, parentIndex) {
+            Expanded(
+              child: ListView.builder(
+                itemCount: 2,
+                itemBuilder: (context, index) {
                   return Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
-                        borderRadius: BorderRadius.circular(21)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 5),
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Tuesday, 14',
-                                  style: TextStyle(fontSize: 15)),
-                              Text('\$1380', style: TextStyle(fontSize: 15)),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          const Divider(color: Colors.black38),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                    color: Colors.blue.shade500,
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Image.asset(
-                                    'assets/icons/shopping_cart.png',
-                                    width: 40,
-                                    height: 30),
+                  height: 200,
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(21)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 5),
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Tuesday, 14', style: TextStyle(fontSize: 15)),
+                            Text('\$1380', style: TextStyle(fontSize: 15)),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        const Divider(color: Colors.black38),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  color: Colors.blue.shade500,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Image.asset('assets/icons/shopping_cart.png',
+                                  width: 40, height: 30),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  right: MediaQuery.of(context).size.width / 3),
+                              child: const Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Shop', style: TextStyle(fontSize: 15)),
+                                  Text('Buy new clothes',
+                                      style: TextStyle(fontSize: 15))
+                                ],
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    right:
-                                        MediaQuery.of(context).size.width / 3),
-                                child: const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Shop',
-                                        style: TextStyle(fontSize: 15)),
-                                    Text('Buy new clothes',
-                                        style: TextStyle(fontSize: 15))
-                                  ],
-                                ),
+                            ),
+                            Container(
+                              child: const Text('-\$90',
+                                  style:
+                                  TextStyle(fontSize: 15, color: Colors.red)),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  color: Colors.blue.shade500,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Image.asset('assets/icons/mortgage.png',
+                                  width: 40, height: 30),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  right: MediaQuery.of(context).size.width / 3),
+                              child: const Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Home', style: TextStyle(fontSize: 15)),
+                                  Text('Buy new House',
+                                      style: TextStyle(fontSize: 15))
+                                ],
                               ),
-                              Container(
-                                child: const Text('-\$90',
-                                    style: TextStyle(
-                                        fontSize: 15, color: Colors.red)),
-                              )
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                    color: Colors.blue.shade500,
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Image.asset('assets/icons/mortgage.png',
-                                    width: 40, height: 30),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    right:
-                                        MediaQuery.of(context).size.width / 3),
-                                child: const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Home',
-                                        style: TextStyle(fontSize: 15)),
-                                    Text('Buy new House',
-                                        style: TextStyle(fontSize: 15))
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: const Text('-\$120',
-                                    style: TextStyle(
-                                        fontSize: 15, color: Colors.red)),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
+                            ),
+                            Container(
+                              child: const Text('-\$120',
+                                  style:
+                                  TextStyle(fontSize: 15, color: Colors.red)),
+                            )
+                          ],
+                        )
+                      ],
                     ),
-                  );
-                });
-              }
-            return Container();
-            }),
-
+                  ),
+                );
+                },
+              ),
+            ),
+            ///
+            /// 
+            /// 
+            /// 
             const SizedBox(height: 15),
             Container(
               height: 200,
