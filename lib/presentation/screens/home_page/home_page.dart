@@ -30,10 +30,10 @@ class _HomePageState extends State<HomePage> {
   DateTime expenseDate = DateTime.now();
   
   
-  String dropValue = 'This month';
+  String dropValue = 'Month Wise';
 
   var dropValueItems = [
-    'This month',
+    'Month Wise',
     'Date Wise',
     'Year Wise',
   ];
@@ -53,8 +53,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.05),
+              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -96,11 +95,11 @@ class _HomePageState extends State<HomePage> {
                 DropdownButton(
                   value: dropValue,
                   onChanged: (newValue) {
-                    if(newValue=='This Month'){
+                    if(newValue=='Month Wise'){
                       filterExpenseMonthWise(allExpense: listOfExpenses);
                     }else if(newValue=='Date Wise'){
                       filterExpenseDateWise(allExpense: listOfExpenses);
-                    } else if(newValue=='Year Wise'){
+                    } else if(newValue=='Year Wise') {
                       filterExpenseYearWise(allExpense: listOfExpenses);
                     }
                     
@@ -111,8 +110,7 @@ class _HomePageState extends State<HomePage> {
                   items: dropValueItems.map((String dropValueItems) {
                     return DropdownMenuItem(
                         value: dropValueItems,
-                        child: Text(dropValueItems,
-                            style: const TextStyle(fontSize: 15)));
+                        child: Text(dropValueItems, style: const TextStyle(fontSize: 15)));
                   }).toList(),
                   
                 ),
@@ -179,7 +177,7 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(
                 width: double.infinity,
-                child: Text('Limit \$900 / week', style: TextStyle(fontSize: 18))),
+                child: Text('Limit \u{20B9}900 / week', style: TextStyle(fontSize: 18))),
 
             /// bar data
             ///
@@ -225,7 +223,7 @@ class _HomePageState extends State<HomePage> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(listFilterExpModel[parentIndex].title,style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
-                                      Text('-\$${listFilterExpModel[parentIndex].totalAmt}',style: const TextStyle( fontSize: 20,fontWeight: FontWeight.w700)),
+                                      Text('-\u{20B9}${listFilterExpModel[parentIndex].totalAmt}',style: const TextStyle( fontSize: 20,fontWeight: FontWeight.w700)),
                                     ],
                                   ),
                                   const Divider(thickness: 3,color: Colors.grey,),
