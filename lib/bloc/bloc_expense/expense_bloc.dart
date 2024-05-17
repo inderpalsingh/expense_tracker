@@ -8,24 +8,24 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState>{
   
   DbConnection db;
   
-  ExpenseBloc({required this.db}): super(InitializationState()){
+  ExpenseBloc({required this.db}): super(ExpenseInitialState()){
     
-    on<FetchExpenseEvent>((event, emit)async{
-      emit(LoadingState());
-      List<ExpenseModel> mData = await db.fetchExpense();
-      emit(SuccessfulState(allExpenseState: mData));
+    on<FetchExpenseInitialEvent>((event, emit)async{
+      emit(ExpenseLoadingState());
+      var mData = await db.fetchExpense();
+      emit(ExpenseSuccessfulState(allExpenseState: mData));
       
     });
     
     on<AddExpenseEvent>((event, emit)async {
-      emit(LoadingState());
+      emit(ExpenseLoadingState());
       bool check = await db.addExpense(expenseModel: event.addExpenseModel);
       
       if(check){
-        List<ExpenseModel> mData = await db.fetchExpense();
-        emit(SuccessfulState(allExpenseState: mData));
+        var mData = await db.fetchExpense();
+        emit(ExpenseSuccessfulState(allExpenseState: mData));
       }else{
-        emit(FailureState(errorMsg: 'Something went wrong !!'));
+        emit(ExpenseFailureState(errorMsg: 'Expense not added'));
       }
     });
     

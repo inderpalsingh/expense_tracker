@@ -3,17 +3,17 @@ import '../../data/model/expense_model.dart';
 sealed class ExpenseState{}
 
 
-class InitializationState extends ExpenseState{}
+class ExpenseInitialState extends ExpenseState{}
 
-class LoadingState extends ExpenseState{}
+class ExpenseLoadingState extends ExpenseState{}
 
-class SuccessfulState extends ExpenseState{
-  List<ExpenseModel> allExpenseState = [];
-  SuccessfulState({required this.allExpenseState});
+class ExpenseSuccessfulState extends ExpenseState{
+  List<ExpenseModel> allExpenseState;
+  ExpenseSuccessfulState({required this.allExpenseState});
 }
 
-class FailureState extends ExpenseState{
+class ExpenseFailureState extends ExpenseState{
   String errorMsg;
-  
-  FailureState({required this.errorMsg});
+
+  ExpenseFailureState({required this.errorMsg});
 }

@@ -11,7 +11,7 @@ class AppConstants{
     ),
     CategoryModel(
       catId: 2,
-      catTitle: "Fast-Food",
+      catTitle: "Fast Food",
       catImgPath: ImageConstants.IMG_PATH_FAST_FOOD,
     ),
     CategoryModel(

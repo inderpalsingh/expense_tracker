@@ -30,7 +30,6 @@ class _AddExpensePageState extends State<AddExpensePage> {
   DateFormat dateFormat = DateFormat.yMMMEd();
   DateFormat monthFormat = DateFormat.LLLL();
   DateFormat yearFormat = DateFormat.y();
-  DateTime expenseDate = DateTime.now();
 
   var selectedCategoryIndex = -1;
 
@@ -38,12 +37,15 @@ class _AddExpensePageState extends State<AddExpensePage> {
   List<MonthWiseExpenseModel> listMonthWiseExpModel = [];
   List<FilterExpenseModel> listFilterExpModel = [];
 
+  DateTime expenseDate = DateTime.now();
+
   Future<void> selectedDate(BuildContext context) async {
     final DateTime? selectedDate = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2022, 1, 1),
-        lastDate: DateTime.now());
+        lastDate: DateTime.now(),
+    );
     if (selectedDate != null) {
       setState(() {
         expenseDate = selectedDate;
@@ -105,6 +107,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                     ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Image.asset(AppConstants.mCategories[selectedCategoryIndex].catImgPath, width: 30,height: 30),
                           Text(AppConstants.mCategories[selectedCategoryIndex].catTitle,
                             style: const TextStyle(
                                 fontSize: 18,
@@ -127,8 +130,6 @@ class _AddExpensePageState extends State<AddExpensePage> {
                                 onTap: () {
                                   setState(() {
                                     selectedCategoryIndex = index;
-                                    //eachCat.catId;
-                                    //select id instead
                                   });
                                   Navigator.pop(context);
                                 },
@@ -163,14 +164,17 @@ class _AddExpensePageState extends State<AddExpensePage> {
               onPressed: () {
                 context.read<ExpenseBloc>().add(AddExpenseEvent(
                     addExpenseModel: ExpenseModel(
+                      catId: AppConstants.mCategories[selectedCategoryIndex].catId,
                         title: titleController.text,
                         desc: descController.text,
-                        exTime: expenseDate.microsecondsSinceEpoch.toString(),
+                        exTime: expenseDate.millisecondsSinceEpoch.toString(),
                         amount: amountController.text.toString(),
                         type: transactionType,
                         userId: 0,
-                        uid: 0,
-                        balance: widget.balance.toString())));
+                        eid: 0,
+                        balance: widget.balance.toString(),
+                    ),
+                ));
                 Navigator.pop(context);
               },
               child: const Text('Save'),
@@ -181,134 +185,4 @@ class _AddExpensePageState extends State<AddExpensePage> {
     );
   }
 
-  void filterExpenseDateWise({required List<ExpenseModel> allExpense}) {
-    listDateWiseExpModel.clear();
-
-    List<String> uniqueDates = [];
-
-    for (ExpenseModel expenseModel in allExpense) {
-      var createdAt = expenseModel.exTime;
-      var mDateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(createdAt));
-      var eachExpenseDate = dateFormat.format(mDateTime);
-
-      print(eachExpenseDate);
-
-      if (uniqueDates.contains(eachExpenseDate)) {
-        uniqueDates.add(eachExpenseDate);
-      }
-      print(uniqueDates);
-    }
-
-    for (String eachDate in uniqueDates) {
-      num totalExpAmt = 0.0;
-      List<ExpenseModel> eachDateExpenses = [];
-
-      for (ExpenseModel expenseModel in allExpense) {
-        var createdAt = expenseModel.exTime;
-        var mDateTime =
-            DateTime.fromMillisecondsSinceEpoch(int.parse(createdAt));
-        var eachExpenseDate = dateFormat.format(mDateTime);
-
-        if (eachExpenseDate == eachDate) {
-          eachDateExpenses.add(expenseModel);
-
-          if (expenseModel.type == "Debit") {
-            totalExpAmt -= int.parse(expenseModel.amount);
-          } else {
-            totalExpAmt += int.parse(expenseModel.amount);
-          }
-        }
-      }
-      listDateWiseExpModel.add(DateWiseExpenseModel(
-          date: eachDate,
-          totalAmt: totalExpAmt.toString(),
-          eachDateAllExpenses: eachDateExpenses));
-    }
-  }
-
-  void filterExpenseMonthWise({required List<ExpenseModel> allExpense}) {
-    List<String> uniqueMonth = [];
-    
-
-    for (ExpenseModel expenseModel in allExpense) {
-      var createdAt = expenseModel.exTime;
-      var mMonth = DateTime.fromMillisecondsSinceEpoch(int.parse(createdAt));
-      var eachExpenseMonth = monthFormat.format(mMonth);
-
-      if (uniqueMonth.contains(eachExpenseMonth)) {
-        uniqueMonth.add(eachExpenseMonth);
-      }
-    }
-
-    for (String eachMonth in uniqueMonth) {
-      num monthTotalExpAmt = 0.0;
-      List<ExpenseModel> eachMonthExpense = [];
-      
-
-      for (ExpenseModel expenseModel in allExpense) {
-        var createdAt = expenseModel.exTime;
-        var mMonth = DateTime.fromMillisecondsSinceEpoch(int.parse(createdAt));
-        var eachExpenseMonth = monthFormat.format(mMonth);
-        
-
-        if (eachExpenseMonth == eachMonth) {
-          eachMonthExpense.add(expenseModel);
-          if (expenseModel.type == "Debit") {
-            monthTotalExpAmt -= int.parse(expenseModel.amount);
-          } else {
-            monthTotalExpAmt += int.parse(expenseModel.amount);
-          }
-        }
-      }
-      listMonthWiseExpModel.add(MonthWiseExpenseModel(
-          month: eachMonth,
-          totalAmt: monthTotalExpAmt.toString(),
-          eachDateAllExpenses: eachMonthExpense));
-    }
-  }
-
-  void filterExpenseYearWise({required List<ExpenseModel> allExpense}) {
-    List<String> uniqueYear = [];
-
-    for (ExpenseModel expenseModel in allExpense) {
-      var createdAt = expenseModel.exTime;
-      var mDateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(createdAt));
-      var eachExpenseYear = monthFormat.format(mDateTime);
-      var eachExpenseMonth = monthFormat.format(mDateTime);
-
-      var eachExpenseMonthYear = "$eachExpenseMonth-$eachExpenseYear";
-
-      if (!uniqueYear.contains(eachExpenseMonthYear)) {
-        uniqueYear.add(eachExpenseMonthYear);
-      }
-    }
-
-    for (String eachYear in uniqueYear) {
-      num yearTotalExpAmt = 0.0;
-      List<ExpenseModel> eachYearExpense = [];
-
-      for (ExpenseModel expenseModel in allExpense) {
-        var createdAt = expenseModel.exTime;
-        var mDateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(createdAt));
-        var eachExpenseMonth = monthFormat.format(mDateTime);
-        var eachExpenseYear = yearFormat.format(mDateTime);
-
-        var eachExpenseMonthYear = "$eachExpenseMonth-$eachExpenseYear";
-
-        if (eachExpenseMonthYear == eachYear) {
-          eachYearExpense.add(expenseModel);
-          if (expenseModel.type == "Debit") {
-            yearTotalExpAmt -= int.parse(expenseModel.amount);
-          } else {
-            yearTotalExpAmt += int.parse(expenseModel.amount);
-          }
-        }
-      }
-      listFilterExpModel.add(FilterExpenseModel(
-          title: eachYear,
-          totalAmt: yearTotalExpAmt.toString(),
-          allExpenses: eachYearExpense,
-      ));
-    }
-  }
 }

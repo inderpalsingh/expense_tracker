@@ -8,6 +8,7 @@ import 'package:expense_tracker/presentation/screens/add_page/add_expense.dart';
 import 'package:expense_tracker/presentation/screens/user_login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../custom_ui/app_constant.dart';
@@ -23,19 +24,25 @@ class _HomePageState extends State<HomePage> {
   List<FilterExpenseModel> listFilterExpModel = [];
   List<ExpenseModel> listOfExpenses = [];
 
+  DateFormat dateFormat = DateFormat.yMMMMd();
+  DateFormat monthFormat = DateFormat.LLLL();
+  DateFormat yearFormat = DateFormat.y();
+  DateTime expenseDate = DateTime.now();
+  
+  
   String dropValue = 'This month';
 
   var dropValueItems = [
     'This month',
-    'Pre month',
-    'Next month',
+    'Date Wise',
+    'Year Wise',
   ];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<ExpenseBloc>().add(FetchExpenseEvent());
+    context.read<ExpenseBloc>().add(FetchExpenseInitialEvent());
   }
 
   @override
@@ -51,20 +58,13 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Monety',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+                  const Text('Monety', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
                   IconButton(
                       onPressed: () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        var logOut =
-                            await prefs.remove(DbConnection.loginCheckLoginID);
-                        if (logOut) {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginUser()));
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        var logOut = await prefs.remove(DbConnection.loginCheckLoginID);
+                        if (logOut) {  
+                          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const LoginUser()));
                         }
                       },
                       icon: const Icon(
@@ -95,13 +95,26 @@ class _HomePageState extends State<HomePage> {
                 ),
                 DropdownButton(
                   value: dropValue,
+                  onChanged: (newValue) {
+                    if(newValue=='This Month'){
+                      filterExpenseMonthWise(allExpense: listOfExpenses);
+                    }else if(newValue=='Date Wise'){
+                      filterExpenseDateWise(allExpense: listOfExpenses);
+                    } else if(newValue=='Year Wise'){
+                      filterExpenseYearWise(allExpense: listOfExpenses);
+                    }
+                    
+                    setState(() {
+                      dropValue=newValue!;
+                    });
+                  },
                   items: dropValueItems.map((String dropValueItems) {
                     return DropdownMenuItem(
                         value: dropValueItems,
                         child: Text(dropValueItems,
                             style: const TextStyle(fontSize: 15)));
                   }).toList(),
-                  onChanged: (value) {},
+                  
                 ),
               ],
             ),
@@ -161,15 +174,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Expense Breakdown', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                DropdownButton(
-                  value: dropValue,
-                  items: dropValueItems.map((String dropValueItems) {
-                    return DropdownMenuItem(
-                        value: dropValueItems,
-                        child: Text(dropValueItems, style: const TextStyle(fontSize: 15)));
-                  }).toList(),
-                  onChanged: (value) {},
-                ),
+                //// DropDown
               ],
             ),
             const SizedBox(
@@ -179,29 +184,36 @@ class _HomePageState extends State<HomePage> {
             /// bar data
             ///
 
+
             Expanded(
               child: BlocBuilder<ExpenseBloc, ExpenseState>(
                 builder: (context, state) {
-                  if (state is LoadingState) {
-                    print('loading  $state');
+                  if (state is ExpenseLoadingState) {
+                    // print('loading  $state');
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
-                  if (state is FailureState) {
-                    print('Failure $state');
+
+                  if (state is ExpenseFailureState) {
+                    // print('Failure $state');
                     return Center(
                       child: Text('Error ${state.errorMsg}'),
                     );
                   }
-                  if (state is SuccessfulState) {
-                    print('Success $state');
+
+                  if (state is ExpenseSuccessfulState) {
+                     // filterExpenseMonthWise(allExpense: state.allExpenseState);
+           
+                    listOfExpenses = state.allExpenseState;
+                    
                     return ListView.builder(
                         itemCount: listFilterExpModel.length,
                         itemBuilder: (_, parentIndex) {
                           return Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                            width: 450,
+                            // padding: EdgeInsets.zero,
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            width: double.infinity,
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.grey, width: 2),
                                 borderRadius: BorderRadius.circular(15)),
@@ -212,25 +224,23 @@ class _HomePageState extends State<HomePage> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(listFilterExpModel[parentIndex].title,style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700)),
-                                      Text('-\$${listFilterExpModel[parentIndex].totalAmt}',style: const TextStyle( fontSize: 22,fontWeight: FontWeight.w700)),
+                                      Text(listFilterExpModel[parentIndex].title,style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
+                                      Text('-\$${listFilterExpModel[parentIndex].totalAmt}',style: const TextStyle( fontSize: 20,fontWeight: FontWeight.w700)),
                                     ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 5, bottom: 5),
-                                    child: Container(
-                                      color: Colors.grey,
-                                      width: 450,
-                                      height: 3,
-                                    ),
-                                  ),
+                                  const Divider(thickness: 3,color: Colors.grey,),
                                   ListView.builder(
                                       shrinkWrap: true,
                                       physics:  const NeverScrollableScrollPhysics(),
                                       itemCount: listFilterExpModel[parentIndex].allExpenses.length,
                                       itemBuilder: (_, index) {
                                         var filteredList = AppConstants.mCategories.where((element) => element.catId == listFilterExpModel[parentIndex].allExpenses[index].title).toList();
+                                        
+                                        
+                                        print('filteredList - $filteredList');
+                                        print("imgPath - '$filteredList[0]'");
                                         String imgPath = filteredList[0].catImgPath;
+                                        
 
                                         return ListTile(
                                           leading: Container(
@@ -309,91 +319,153 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  void filterExpenseDateWise({required List<ExpenseModel> allExpense}) {
+    listFilterExpModel.clear();
+
+    List<String> uniqueDates = [];
+
+    for (ExpenseModel expenseModel in allExpense) {
+      var createdAt = expenseModel.exTime;
+      var mDateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(createdAt));
+      var eachExpenseDate = dateFormat.format(mDateTime);
+
+      print(eachExpenseDate);
+
+      if (!uniqueDates.contains(eachExpenseDate)) {
+        uniqueDates.add(eachExpenseDate);
+      }
+      print(uniqueDates);
+    }
+
+    for (String eachDate in uniqueDates) {
+      num totalExpAmt = 0.0;
+      List<ExpenseModel> eachDateExpenses = [];
+
+      for (ExpenseModel expenseModel in allExpense) {
+        var createdAt = expenseModel.exTime;
+        var mDateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(createdAt));
+        var eachExpenseDate = dateFormat.format(mDateTime);
+
+        if (eachExpenseDate == eachDate) {
+          eachDateExpenses.add(expenseModel);
+
+          if (expenseModel.type == "Debit") {
+            totalExpAmt -= int.parse(expenseModel.amount);
+          } else {
+            totalExpAmt += int.parse(expenseModel.amount);
+          }
+        }
+      }
+      listFilterExpModel.add(FilterExpenseModel(
+          title: eachDate,
+          totalAmt: totalExpAmt.toString(),
+          allExpenses: eachDateExpenses
+      ));
+    }
+  }
+
+  void filterExpenseMonthWise({required List<ExpenseModel> allExpense}) {
+    listFilterExpModel.clear();
+    List<String> uniqueMonth = [];
+
+
+    for (ExpenseModel expenseModel in allExpense) {
+      var createdAt = expenseModel.exTime;
+      var mMonth = DateTime.fromMillisecondsSinceEpoch(int.parse(createdAt));
+      var eachExpenseMonth = monthFormat.format(mMonth);
+
+      if (!uniqueMonth.contains(eachExpenseMonth)) {
+        uniqueMonth.add(eachExpenseMonth);
+      }
+    }
+
+    for (String eachMonth in uniqueMonth) {
+      num monthTotalExpAmt = 0.0;
+      List<ExpenseModel> eachMonthExpense = [];
+
+
+      for (ExpenseModel expenseModel in allExpense) {
+        var createdAt = expenseModel.exTime;
+        var mMonth = DateTime.fromMillisecondsSinceEpoch(int.parse(createdAt));
+        var eachExpenseMonth = monthFormat.format(mMonth);
+
+
+        if (eachExpenseMonth == eachMonth) {
+          eachMonthExpense.add(expenseModel);
+          if (expenseModel.type == "Debit") {
+            monthTotalExpAmt -= int.parse(expenseModel.amount);
+          } else {
+            monthTotalExpAmt += int.parse(expenseModel.amount);
+          }
+        }
+      }
+      listFilterExpModel.add(FilterExpenseModel(
+          title: eachMonth,
+          totalAmt: monthTotalExpAmt.toString(),
+          allExpenses: eachMonthExpense
+      ));
+    }
+  }
+
+  void filterExpenseYearWise({required List<ExpenseModel> allExpense}) {
+    listFilterExpModel.clear();
+    List<String> uniqueYear = [];
+
+    for (ExpenseModel expenseModel in allExpense) {
+      var createdAt = expenseModel.exTime;
+      var yDateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(createdAt));
+      var eachExpenseYear = yearFormat.format(yDateTime);
+      // var eachExpenseMonth = monthFormat.format(mDateTime);
+
+      var eachExpenseYearNew = eachExpenseYear;
+
+      if (!uniqueYear.contains(eachExpenseYearNew)) {
+        uniqueYear.add(eachExpenseYearNew);
+      }
+    }
+
+    for (String eachYear in uniqueYear) {
+      num yearTotalExpAmt = 0.0;
+      List<ExpenseModel> eachYearExpense = [];
+
+      for (ExpenseModel expenseModel in allExpense) {
+        var createdAt = expenseModel.exTime;
+        var yDateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(createdAt));
+        // var eachExpenseMonth = monthFormat.format(yDateTime);
+        var eachExpenseYear = yearFormat.format(yDateTime);
+
+        // var eachExpenseMonthYear = "$eachExpenseMonth-$eachExpenseYear";
+        var eachExpenseMonthYear = eachExpenseYear;
+
+        if (eachExpenseMonthYear == eachYear) {
+          eachYearExpense.add(expenseModel);
+          if (expenseModel.type == "Debit") {
+            yearTotalExpAmt -= int.parse(expenseModel.amount);
+          } else {
+            yearTotalExpAmt += int.parse(expenseModel.amount);
+          }
+        }
+      }
+      listFilterExpModel.add(FilterExpenseModel(
+        title: eachYear,
+        totalAmt: yearTotalExpAmt.toString(),
+        allExpenses: eachYearExpense,
+      ));
+    }
+  }
+  
+  
 }
 
-//// Container(
-//               height: 200,
-//               decoration: BoxDecoration(
-//                   color: Colors.grey.shade100,
-//                   borderRadius: BorderRadius.circular(21)),
-//               child: Padding(
-//                 padding: const EdgeInsets.all(15.0),
-//                 child: Column(
-//                   children: [
-//                     const SizedBox(height: 5),
-//                     const Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: [
-//                         Text('Tuesday, 14', style: TextStyle(fontSize: 15)),
-//                         Text('\$1380', style: TextStyle(fontSize: 15)),
-//                       ],
-//                     ),
-//                     const SizedBox(height: 10),
-//                     const Divider(color: Colors.black38),
-//                     Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: [
-//                         Container(
-//                           width: 50,
-//                           height: 50,
-//                           decoration: BoxDecoration(
-//                               color: Colors.blue.shade500,
-//                               borderRadius: BorderRadius.circular(5)),
-//                           child: Image.asset('assets/icons/shopping_cart.png',
-//                               width: 40, height: 30),
-//                         ),
-//                         Padding(
-//                           padding: EdgeInsets.only(
-//                               right: MediaQuery.of(context).size.width / 3),
-//                           child: const Column(
-//                             crossAxisAlignment: CrossAxisAlignment.start,
-//                             children: [
-//                               Text('Shop', style: TextStyle(fontSize: 15)),
-//                               Text('Buy new clothes',
-//                                   style: TextStyle(fontSize: 15))
-//                             ],
-//                           ),
-//                         ),
-//                         Container(
-//                           child: const Text('-\$90',
-//                               style:
-//                                   TextStyle(fontSize: 15, color: Colors.red)),
-//                         )
-//                       ],
-//                     ),
-//                     const SizedBox(height: 10),
-//                     Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: [
-//                         Container(
-//                           width: 50,
-//                           height: 50,
-//                           decoration: BoxDecoration(
-//                               color: Colors.blue.shade500,
-//                               borderRadius: BorderRadius.circular(5)),
-//                           child: Image.asset('assets/icons/mortgage.png',
-//                               width: 40, height: 30),
-//                         ),
-//                         Padding(
-//                           padding: EdgeInsets.only(
-//                               right: MediaQuery.of(context).size.width / 3),
-//                           child: const Column(
-//                             crossAxisAlignment: CrossAxisAlignment.start,
-//                             children: [
-//                               Text('Home', style: TextStyle(fontSize: 15)),
-//                               Text('Buy new House',
-//                                   style: TextStyle(fontSize: 15))
-//                             ],
-//                           ),
-//                         ),
-//                         Container(
-//                           child: const Text('-\$120',
-//                               style:
-//                                   TextStyle(fontSize: 15, color: Colors.red)),
-//                         )
-//                       ],
-//                     )
-//                   ],
-//                 ),
-//               ),
-//             ),
+
+
+
+
+
+
+
+
+
+
+

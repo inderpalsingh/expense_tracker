@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       title: 'Expense Tracker',
-      home: HomePage(),
+      home: const SplashPage(),
     );
   }
 }
