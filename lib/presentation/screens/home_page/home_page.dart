@@ -194,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                   }
 
                   if (state is ExpenseFailureState) {
-                    // print('Failure $state');
+                    print('Failure $state');
                     return Center(
                       child: Text('Error ${state.errorMsg}'),
                     );
@@ -232,7 +232,7 @@ class _HomePageState extends State<HomePage> {
                                       physics:  const NeverScrollableScrollPhysics(),
                                       itemCount: listFilterExpModel[parentIndex].allExpenses.length,
                                       itemBuilder: (_, index) {
-                                        var filteredList = AppConstants.mCategories.where((element) => element.catId == listFilterExpModel[parentIndex].allExpenses[index].title).toList();
+                                        var filteredList = AppConstants.mCategories.where((element) => element.catId == listFilterExpModel[parentIndex].allExpenses[index].catId).toList();
                                         
                                         
                                         print('filteredList - $filteredList');
@@ -242,7 +242,7 @@ class _HomePageState extends State<HomePage> {
 
                                         return ListTile(
                                           leading: Container(
-                                            width: double.infinity,
+                                            width: 50,
                                             height: 50,
                                             decoration: BoxDecoration(
                                               color: Colors.blue.shade200,
@@ -379,7 +379,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     for (String eachMonth in uniqueMonth) {
-      num monthTotalExpAmt = 0.0;
+      num monthTotalExpAmt = 0;
       List<ExpenseModel> eachMonthExpense = [];
 
 
